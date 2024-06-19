@@ -41,4 +41,19 @@ router.post(
     }
   }
 );
+
+router.delete("/", [body("id").exists()], async function (req, res) {
+  try {
+    const commentId = req.body.id;
+    const comment = await Comment.findByIdAndDelete(commentId);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found!" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Comment deleted successfully", comment });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
 module.exports = router;
