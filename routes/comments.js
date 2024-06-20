@@ -45,6 +45,7 @@ router.post(
 router.delete("/", [body("id").exists()], async function (req, res) {
   try {
     const commentId = req.body.id;
+    console.log(commentId)
     const comment = await Comment.findByIdAndDelete(commentId);
     if (!comment) {
       return res.status(404).json({ error: "Comment not found!" });
